@@ -14,7 +14,7 @@ const envPath = yaml.load(
   readFileSync(join(__dirname, YAML_CONFIG_ENV), 'utf8'),
 ) as Record<string, any>;
 
-console.log(merge(filePath, envPath));
+console.log('当前配置信息:', merge(filePath, envPath));
 export default () => {
   return merge(filePath, envPath);
 };
