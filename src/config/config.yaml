@@ -6,4 +6,8 @@ throttler:
   ttl: 60
   limit: 10000
 
+jwt:
+  secret_key: 'HADES'
+  expires_in_time: '30d'
+
 
