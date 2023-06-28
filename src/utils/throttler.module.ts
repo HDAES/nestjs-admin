@@ -11,8 +11,8 @@ import {
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        ttl: configService.get<number>('THROTTLER_TTL', 60),
-        limit: configService.get<number>('THROTTLER_LIMIT', 10),
+        ttl: configService.get<number>('throttler.ttl', 60),
+        limit: configService.get<number>('throttler.limit', 10000),
       }),
     }),
   ],
