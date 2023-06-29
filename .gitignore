@@ -2,6 +2,7 @@
 /dist
 /src/config/config.production.yaml
 /node_modules
+/files
 
 # Logs
 logs

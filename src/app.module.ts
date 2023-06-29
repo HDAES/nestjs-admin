@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from './auth/auth.guard';
 import { HttpFilter } from './common/filter/http.filter';
 import { ResponseInterceptor } from './common/interceptor/response.interceptor';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ResponseInterceptor } from './common/interceptor/response.interceptor';
     ThrottlerModule,
     UserModule,
     AuthModule,
+    UploadModule,
   ],
   providers: [
     {
