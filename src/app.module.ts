@@ -1,5 +1,5 @@
 import { Module, ValidationPipe } from '@nestjs/common';
-import { APP_GUARD, APP_PIPE, APP_FILTER } from '@nestjs/core';
+import { APP_GUARD, APP_PIPE, APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
 import { DatabaseModule } from './utils/database.module';
@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 
 import { AuthGuard } from './auth/auth.guard';
 import { HttpFilter } from './common/filter/http.filter';
+import { ResponseInterceptor } from './common/interceptor/response.interceptor';
 
 @Module({
   imports: [
@@ -32,6 +33,10 @@ import { HttpFilter } from './common/filter/http.filter';
     {
       provide: APP_FILTER,
       useClass: HttpFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor,
     },
   ],
 })
