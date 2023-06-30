@@ -7,8 +7,7 @@ import { join } from 'path';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors();
-  console.log(join(__dirname, 'files'));
-  app.useStaticAssets('./files');
+  app.useStaticAssets('files', { prefix: '/files/' });
 
   const configService = app.get(ConfigService);
   new Swagger(app);

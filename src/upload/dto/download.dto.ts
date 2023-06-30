@@ -9,4 +9,10 @@ export class DownloadDto {
     message: '文件地址不能为空',
   })
   path: string;
+
+  @ApiProperty({
+    description: '文件名',
+    required: false,
+  })
+  name: string;
 }
