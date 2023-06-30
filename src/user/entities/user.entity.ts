@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 @Entity()
 export class UserEntity {
@@ -51,4 +57,16 @@ export class UserEntity {
     default: () => 'NOW()',
   })
   last_login_date: string;
+
+  @ApiProperty({
+    description: '创建时间',
+  })
+  @CreateDateColumn()
+  create_date: string;
+
+  @ApiProperty({
+    description: '更新时间',
+  })
+  @UpdateDateColumn()
+  update_date: string;
 }
