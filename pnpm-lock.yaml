@@ -12,6 +12,7 @@ specifiers:
   '@nestjs/testing': ^10.0.0
   '@nestjs/throttler': ^4.1.0
   '@nestjs/typeorm': ^10.0.0
+  '@types/crypto-js': ^4.1.1
   '@types/express': ^4.17.17
   '@types/jest': ^29.5.2
   '@types/js-yaml': ^4.0.5
@@ -24,6 +25,7 @@ specifiers:
   class-validator: ^0.14.0
   compressing: ^1.9.0
   cross-env: ^7.0.3
+  crypto-js: ^4.1.1
   dayjs: ^1.11.8
   eslint: ^8.42.0
   eslint-config-prettier: ^8.8.0
@@ -59,6 +61,7 @@ dependencies:
   class-validator: 0.14.0
   compressing: 1.9.0
   cross-env: 7.0.3
+  crypto-js: 4.1.1
   dayjs: 1.11.8
   js-yaml: 4.1.0
   lodash: 4.17.21
@@ -73,6 +76,7 @@ devDependencies:
   '@nestjs/cli': 10.0.5
   '@nestjs/schematics': 10.0.1_typescript@5.1.5
   '@nestjs/testing': 10.0.3_ushlzcms54vfr5tyqmkniz3zwi
+  '@types/crypto-js': 4.1.1
   '@types/express': 4.17.17
   '@types/jest': 29.5.2
   '@types/js-yaml': 4.0.5
@@ -1253,6 +1257,10 @@ packages:
     resolution: {integrity: sha512-t73xJJrvdTjXrn4jLS9VSGRbz0nUY3cl2DMGDU48lKl+HR9dbbjW2A9r3g40VA++mQpy6uuHg33gy7du2BKpog==}
     dev: true
 
+  /@types/crypto-js/4.1.1:
+    resolution: {integrity: sha512-BG7fQKZ689HIoc5h+6D2Dgq1fABRa0RbBWKBd9SP/MVRVXROflpm5fhwyATX5duFmbStzyzyycPB8qUYKDH3NA==}
+    dev: true
+
   /@types/eslint-scope/3.7.4:
     resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
     dependencies:
@@ -2358,6 +2366,10 @@ packages:
 
   /crypt/0.0.2:
     resolution: {integrity: sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==}
+    dev: false
+
+  /crypto-js/4.1.1:
+    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
     dev: false
 
   /date-fns/2.30.0:

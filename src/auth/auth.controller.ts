@@ -1,7 +1,8 @@
 import { Body, Controller, Get, Post, Request } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
+import { LoginDto } from './dto/login.dto';
 
 @ApiTags('权限管理')
 @Controller('auth')
@@ -10,8 +11,9 @@ export class AuthController {
 
   @Public()
   @Post('login')
-  signIn(@Body() signInDto: Record<string, any>) {
-    return this.authService.signIn(signInDto.username, signInDto.password);
+  @ApiOperation({ summary: '登录' })
+  signIn(@Body() loginDto: LoginDto) {
+    return this.authService.signIn(loginDto);
   }
 
   @Get('profile')

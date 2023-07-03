@@ -1,6 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+
 import { UserService } from '../user/user.service';
+import { LoginDto, LoginTypeEnum } from './dto/login.dto';
+import { Crypto } from '../utils/crypto';
 
 @Injectable()
 export class AuthService {
@@ -9,15 +12,16 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(account, pass) {
-    const user = await this.userService.findOne(account);
-    console.log(user);
-    if (user?.password !== pass) {
-      throw new UnauthorizedException();
+  async signIn(loginDto: LoginDto) {
+    if (loginDto.type === LoginTypeEnum.ACCOUNT) {
+      const user = await this.userService.findOne(loginDto.account);
+      if (user?.password !== Crypto.encrypt(loginDto.password)) {
+        throw new HttpException('账号或密码不正确', HttpStatus.CREATED);
+      }
+      const payload = { id: user.id, username: user.name };
+      return {
+        access_token: await this.jwtService.signAsync(payload),
+      };
     }
-    const payload = { id: user.id, username: user.name };
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
   }
 }
