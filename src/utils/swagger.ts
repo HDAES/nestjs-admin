@@ -9,6 +9,6 @@ export default class Swagger {
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('doc-docs', app, document);
+    SwaggerModule.setup('api-docs', app, document);
   }
 }

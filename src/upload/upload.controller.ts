@@ -5,8 +5,11 @@ import {
   UseInterceptors,
   UploadedFile,
   Res,
+  Body,
   Query,
   ParseFilePipe,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiConsumes, ApiBody } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -15,10 +18,13 @@ import { zip } from 'compressing';
 import { Public } from '../auth/decorators/public.decorator';
 import { join } from 'path';
 import { DownloadDto } from './dto/download.dto';
+import { UploadService } from './upload.service';
 @ApiTags('上传文件')
 @Controller('upload')
 export class UploadController {
   private readonly baseUrl = '../../files/';
+
+  constructor(private readonly uploadService: UploadService) {}
 
   @Post('album')
   @Public()
@@ -65,5 +71,32 @@ export class UploadController {
       `attachment; filename=${query.name || query.path}`,
     );
     tarStream.pipe(res);
+  }
+
+  @Post('album/oss')
+  @Public()
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiConsumes('multipart/form-data')
+  @ApiOperation({ summary: '上传文件到oss' })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          description: '文件',
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  async uploadOss(
+    @UploadedFile(new ParseFilePipe())
+    file,
+  ) {
+    return await this.uploadService.putOssFile(
+      file.path,
+      join(__dirname, `../../${file.path}`),
+    );
   }
 }
