@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-@Entity()
+@Entity({ name: 'user' })
 export class UserEntity {
   @PrimaryColumn()
   id: number;

@@ -12,6 +12,6 @@ db:
 oss:
   accessKeyId: ''
   accessKeySecret: ''
-  bucket: ''
-  region: ''
+  bucket: 'hades0512'
+  region: 'oss-cn-beijing'
 

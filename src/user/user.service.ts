@@ -1,12 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { Repository } from 'typeorm';
+
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateTypeEnum, CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+  ) {}
+  async create(createUserDto: CreateUserDto) {
+    if (createUserDto.type === CreateTypeEnum.ACCOUNT) {
+      // const user = await this.userRepository.findOne({
+      //   where: { account: createUserDto.account },
+      // });
+      // console.log(user);
+      // 账号注册
+      return 'This action adds a new user';
+    } else {
+      return 'This action adds a new user';
+    }
   }
 
   findAll() {
