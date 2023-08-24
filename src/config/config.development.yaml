@@ -10,8 +10,8 @@ db:
   password: '123456'
 
 oss:
-  accessKeyId: ''
-  accessKeySecret: ''
+  accessKeyId: 'LTAI5t8FCcQW3jNmTby9hWM8'
+  accessKeySecret: '6BGAS1Gjpb4sHQqFWmtngCMjTkaBAn'
   bucket: 'hades0512'
   region: 'oss-cn-beijing'
 

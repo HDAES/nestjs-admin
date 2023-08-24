@@ -11,6 +11,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { HttpFilter } from './common/filter/http.filter';
 import { ResponseInterceptor } from './common/interceptor/response.interceptor';
 import { UploadModule } from './upload/upload.module';
+import { SocketTestModule } from './socket-test/socket-test.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { UploadModule } from './upload/upload.module';
     UserModule,
     AuthModule,
     UploadModule,
+    SocketTestModule,
   ],
   providers: [
     {
