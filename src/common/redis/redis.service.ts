@@ -34,4 +34,8 @@ export class RedisService {
     }
     return null;
   }
+
+  async remove(key: string): Promise<string | null> {
+    return await this.redisClient.del(key);
+  }
 }

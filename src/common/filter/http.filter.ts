@@ -8,21 +8,22 @@ import {
 import { Request, Response } from 'express';
 
 import { QueryFailedError } from 'typeorm';
-import { MyCustomError } from './custom.error';
-@Catch(QueryFailedError, HttpException, MyCustomError)
+import { CustomError } from './custom.error';
+@Catch(QueryFailedError, HttpException, CustomError)
 export class HttpFilter<T> implements ExceptionFilter {
   catch(
-    exception: QueryFailedError | HttpException | MyCustomError,
+    exception: QueryFailedError | HttpException | CustomError,
     host: ArgumentsHost,
   ) {
     const ctx = host.switchToHttp();
     const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
 
-    if (exception instanceof MyCustomError) {
+    if (exception instanceof CustomError) {
       response.status(200).json({
-        status: exception.code,
-        message: exception.name,
+        code: exception.code,
+        message: exception.message,
+        success: false,
       });
     }
 

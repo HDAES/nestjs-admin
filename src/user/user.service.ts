@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,7 +7,8 @@ import { Request } from 'express';
 import { CreateTypeEnum, CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
-import { MyCustomError } from '../common/filter/custom.error';
+import { CustomError } from '../common/filter/custom.error';
+import { Crypto } from '../utils/crypto';
 
 @Injectable()
 export class UserService {
@@ -30,34 +31,36 @@ export class UserService {
       if (!user) {
         const newUser = new UserEntity();
         newUser.account = createUserDto.account;
-        newUser.password = createUserDto.password;
+        newUser.password = Crypto.encrypt(createUserDto.password);
         newUser.name = createUserDto.name;
         newUser.roles = [];
         newUser.last_login_ip = this.request.ip;
         return await this.userRepository.save(newUser);
       } else {
-        throw new MyCustomError('该账号已被注册', 0);
+        throw new CustomError('该账号已被注册', 201);
       }
-      // 账号注册
-      return 'This action adds a new user';
     } else {
       return 'This action adds a new user';
     }
   }
 
-  findAll() {
-    return `This action returns all user`;
+  /**
+   * # 根据账号查询用户密码、id和name
+   * @param account
+   */
+  async findByAccount(account: string): Promise<UserEntity> {
+    return await this.userRepository.findOne({
+      where: { account },
+      select: ['password', 'id', 'name'],
+    });
   }
 
-  findOne(account: string): UserEntity {
-    return new UserEntity();
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  /**
+   * # 根据token 获取用户信息
+   */
+  async getUserInfo(): Promise<UserEntity> {
+    return await this.userRepository.findOne({
+      where: { id: this.request['user'].id },
+    });
   }
 }

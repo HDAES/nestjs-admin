@@ -6,6 +6,7 @@ export default class Swagger {
       .setTitle('接口文档')
       .setDescription('this is a description')
       .setVersion('1.0.0')
+      .addBearerAuth()
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
