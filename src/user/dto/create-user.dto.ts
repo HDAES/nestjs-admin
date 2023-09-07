@@ -1,6 +1,8 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
-
+import { Exclude } from 'class-transformer';
+import { UserEntity } from '../entities/user.entity';
+import { PrimaryGeneratedColumn } from 'typeorm';
 export enum CreateTypeEnum {
   /**
    * # 账号
@@ -15,6 +17,9 @@ export enum CreateTypeEnum {
 
 @ApiTags('创建用户实体')
 export class CreateUserDto {
+  @PrimaryGeneratedColumn()
+  id: number;
+
   @ApiProperty({
     enum: CreateTypeEnum,
   })
@@ -30,4 +35,7 @@ export class CreateUserDto {
 
   @ApiProperty({ description: '账号' })
   account: string;
+
+  @ApiProperty({ description: '昵称' })
+  name: string;
 }

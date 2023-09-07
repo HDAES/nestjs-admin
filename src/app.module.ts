@@ -12,6 +12,7 @@ import { HttpFilter } from './common/filter/http.filter';
 import { ResponseInterceptor } from './common/interceptor/response.interceptor';
 import { UploadModule } from './upload/upload.module';
 import { SocketTestModule } from './socket-test/socket-test.module';
+import { RedisModule } from './common/redis/redis.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { SocketTestModule } from './socket-test/socket-test.module';
     AuthModule,
     UploadModule,
     SocketTestModule,
+    RedisModule,
   ],
   providers: [
     {

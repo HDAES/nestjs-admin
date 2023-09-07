@@ -10,4 +10,7 @@ jwt:
   secret_key: 'HADES'
   expires_in_time: '30d'
 
+redis:
+  url: 'redis://127.0.0.1:6379'
+
 
