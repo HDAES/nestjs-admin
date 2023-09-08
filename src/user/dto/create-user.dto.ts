@@ -38,4 +38,7 @@ export class CreateUserDto {
 
   @ApiProperty({ description: '昵称' })
   name: string;
+
+  @ApiProperty({ description: '电话号码' })
+  phone: string;
 }

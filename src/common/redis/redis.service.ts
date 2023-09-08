@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import Redis from 'ioredis';
+import Redis, { type Redis as RedisType } from 'ioredis';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class RedisService {
-  private readonly redisClient;
+  private readonly redisClient: RedisType;
 
   constructor(private readonly configService: ConfigService) {
     // @ts-ignore
@@ -13,17 +13,25 @@ export class RedisService {
     });
   }
 
-  async setValue(key: string, value: string): Promise<void> {
+  /**
+   * # 设置 内容
+   * @param key key
+   * @param value 内容
+   * @param expire 秒
+   */
+  async setValue(key: string, value: string, expire?: number): Promise<void> {
     await this.redisClient.set(key, value);
+    if (expire) await this.redisClient.pexpire(key, expire);
   }
 
   async getValue(key: string): Promise<string | null> {
-    return await this.redisClient.get(key);
+    return this.redisClient.get(key);
   }
 
-  async setObject(key: string, obj: object): Promise<void> {
+  async setObject(key: string, obj: object, expire?: number): Promise<void> {
     const serializedObj = JSON.stringify(obj);
     await this.redisClient.set(key, serializedObj);
+    if (expire) await this.redisClient.pexpire(key, expire);
   }
 
   async getObject<T>(key: string): Promise<T | null> {
@@ -35,7 +43,11 @@ export class RedisService {
     return null;
   }
 
-  async remove(key: string): Promise<string | null> {
-    return await this.redisClient.del(key);
+  /**
+   * # 根据key 删除值
+   * @param key
+   */
+  async remove(key: string) {
+    this.redisClient.del(key);
   }
 }

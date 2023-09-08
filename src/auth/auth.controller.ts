@@ -39,6 +39,13 @@ export class AuthController {
   }
 
   @Public()
+  @Post('SMSCode')
+  @ApiOperation({ summary: '获取短信验证码' })
+  getSMSCode(@Body() verifyDto: VerifyDto) {
+    return this.authService.getSMSCode(verifyDto);
+  }
+
+  @Public()
   @Get('getCode')
   @ApiOperation({ summary: '生成二维码信息' })
   async getCode() {

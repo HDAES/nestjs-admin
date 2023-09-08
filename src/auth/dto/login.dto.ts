@@ -28,13 +28,15 @@ export class LoginDto {
   })
   type: LoginTypeEnum;
 
-  @ApiPropertyOptional({
-    description: '登录账号',
-  })
+  @ApiPropertyOptional({ description: '登录账号' })
   account: string;
 
-  @ApiPropertyOptional({
-    description: '密码',
-  })
+  @ApiPropertyOptional({ description: '密码' })
   password: string;
+
+  @ApiPropertyOptional({ description: '手机号码' })
+  phone: string;
+
+  @ApiPropertyOptional({ description: '短信验证码' })
+  code: number;
 }

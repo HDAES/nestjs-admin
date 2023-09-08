@@ -18,4 +18,9 @@ export class VerifyDto {
     description: '验证码code',
   })
   code: string;
+
+  @ApiPropertyOptional({
+    description: '电话号码',
+  })
+  phone: number;
 }

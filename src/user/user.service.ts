@@ -24,7 +24,6 @@ export class UserService {
    */
   async create(createUserDto: CreateUserDto) {
     if (createUserDto.type === CreateTypeEnum.ACCOUNT) {
-      console.log(createUserDto);
       const user = await this.userRepository.findOne({
         where: { account: createUserDto.account },
       });
@@ -39,8 +38,11 @@ export class UserService {
       } else {
         throw new CustomError('该账号已被注册', 201);
       }
-    } else {
-      return 'This action adds a new user';
+    } else if (createUserDto.type === CreateTypeEnum.PHONE) {
+      const newUser = new UserEntity();
+      newUser.phone = createUserDto.phone;
+      newUser.last_login_ip = this.request.ip;
+      return await this.userRepository.save(newUser);
     }
   }
 
@@ -52,6 +54,12 @@ export class UserService {
     return await this.userRepository.findOne({
       where: { account },
       select: ['password', 'id', 'name'],
+    });
+  }
+
+  async findByPhone(phone: string): Promise<UserEntity> {
+    return await this.userRepository.findOne({
+      where: { phone },
     });
   }
 
