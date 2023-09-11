@@ -37,9 +37,14 @@ export class AuthService {
         );
         if (code === loginDto.code.toString()) {
           const user = await this.userService.findByPhone(loginDto.phone);
-          const payload = { id: user.id, username: user.name };
-          user.access_token = await this.jwtService.signAsync(payload);
-          if (user) return user;
+          if (user)
+            return {
+              ...user,
+              access_token: await this.jwtService.signAsync({
+                id: user.id,
+                username: user.name,
+              }),
+            };
 
           // 注册
           const createBody = new CreateUserDto();

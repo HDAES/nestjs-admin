@@ -9,6 +9,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { CustomError } from '../common/filter/custom.error';
 import { Crypto } from '../utils/crypto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
@@ -16,6 +17,8 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     @Inject(REQUEST) private request: Request,
+
+    private jwtService: JwtService,
   ) {}
 
   /**
@@ -42,7 +45,14 @@ export class UserService {
       const newUser = new UserEntity();
       newUser.phone = createUserDto.phone;
       newUser.last_login_ip = this.request.ip;
-      return await this.userRepository.save(newUser);
+      const user = await this.userRepository.save(newUser);
+      return {
+        ...user,
+        access_token: await this.jwtService.signAsync({
+          id: user.id,
+          username: user.name,
+        }),
+      };
     }
   }
 
